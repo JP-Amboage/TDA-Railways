@@ -1,0 +1,4 @@
+1. Data from the original [aidos-lab repo](https://github.com/aidos-lab/gtfstop/) can be downloaded from [here](https://github.com/aidos-lab/gtfstop/tree/main/Data) and placed inside the Data folder of this repo.
+2. Data for Switzerland can be downloaded from [here](https://opentransportdata.swiss/en/dataset/timetable-2024-gtfs2020/resource/4fb97c3a-a7bc-46f0-9adc-6707d9307133).
+3. If you want to filter the Swiss data by agency unzip the Switzerland gtfs .zip file downloaded in step 2. Keep both the .zip file and the unizipped folder (same name as the .zip file but without .zip extension) inside the Data folder
+4. Use the script clean.py to generate filtered GTFS data (.zip file) for Switzerland. In the clean.py file specify the agencies that you want to keep by their id (i.e. 11 for SBB) and the name you want to give to the resulting new GTFS .zip. The id of an agency can be seen inside the file agency.txt inside the folder created in step 3.
