@@ -1,5 +1,5 @@
 # Ignore everything inside the "data" folder
-Data/*
+#Data/*
 
 # macOS files to ignore
 .DS_Store
