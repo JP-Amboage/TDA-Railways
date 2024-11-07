@@ -1,6 +1,6 @@
 # Ignore everything inside the "data" folder
 Data/*
-!Data/data_instructions.txt
+!Data/data_instructions.md
 
 # macOS files to ignore
 .DS_Store
