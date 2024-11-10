@@ -1,9 +1,7 @@
 #%%
-import partridge as ptg
 import pandas as pd
 import os
 import zipfile
-import os
 import sys
 
 if not os.path.exists('gtfs_temp'):
