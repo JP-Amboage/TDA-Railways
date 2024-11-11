@@ -10,6 +10,12 @@ basel_coords = {'min_lat': 47.519295, 'max_lat': 47.589862, 'min_lon': 7.554643,
 bern_coords = {'min_lat': 46.919078, 'max_lat': 46.990122, 'min_lon': 7.294518, 'max_lon': 7.495514}
 lausanne_coords = {'min_lat': 46.50439, 'max_lat': 46.551218, 'min_lon': 6.58409, 'max_lon': 6.67426}
 
+lucerne_coords = {'min_lat': 47.010, 'max_lat': 47.090, 'min_lon': 8.220, 'max_lon': 8.360}
+stgallen_coords = {'min_lat': 47.390, 'max_lat': 47.455, 'min_lon': 9.270, 'max_lon': 9.450}
+lugano_coords = {'min_lat': 45.950, 'max_lat': 46.050, 'min_lon': 8.900, 'max_lon': 9.020}
+biel_coords = {'min_lat': 47.110, 'max_lat': 47.180, 'min_lon': 7.180, 'max_lon': 7.320}
+thun_coords = {'min_lat': 46.700, 'max_lat': 46.790, 'min_lon': 7.560, 'max_lon': 7.690}
+
 #%%
 if not os.path.exists('gtfs_temp'):
     os.makedirs('gtfs_temp')
