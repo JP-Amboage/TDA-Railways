@@ -158,3 +158,22 @@ def compute_ideal_matrix(G: nx.Graph):
                 distance_matrix[i][j] = distance.geodesic(coords_1, coords_2).meters
     
     return distance_matrix
+
+def make_symmetric(matrix, method='min'):
+    if method == 'min':
+        return np.minimum(matrix, matrix.T)
+    elif method == 'max':
+        return np.maximum(matrix, matrix.T)
+    elif method == 'mean':
+        return (matrix + matrix.T) / 2
+    else:
+        raise ValueError("Method should be either 'min', 'max' or 'mean'")
+
+
+def normalize(matrix, method='average'):
+    if method == 'average':
+        return matrix / np.mean(matrix[np.triu_indices(matrix.shape[0])])
+    elif method == 'max':
+        return matrix / np.max(matrix)
+    else:
+        raise ValueError("Method should be either 'average' or 'max'")
