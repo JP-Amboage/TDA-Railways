@@ -6,6 +6,7 @@ from ripser import ripser
 from persim import PersImage, plot_diagrams
 import networkx as nx
 from math import radians, sin, cos, sqrt, atan2
+from geopy import distance
 
 def nx_to_pyg_data(graph):
     """
@@ -115,6 +116,8 @@ def haversine(lat1, lon1, lat2, lon2):
     """
     # Radius of the Earth in kilometers
     R = 6371.0
+    # Radius of the Earth in meters
+    R= 6.378*1e6
     
     # Convert latitude and longitude from degrees to radians
     lat1, lon1, lat2, lon2 = map(radians, [lat1, lon1, lat2, lon2])
@@ -147,10 +150,11 @@ def compute_ideal_matrix(G: nx.Graph):
             else:
                 # Get latitude and longitude of both nodes
                 # print(G.nodes[node1].keys())
-                lat1, lon1 = G.nodes[node1]['x'], G.nodes[node1]['y']
-                lat2, lon2 = G.nodes[node2]['x'], G.nodes[node2]['y']
+                coords_1 = (G.nodes[node1]['y'], G.nodes[node1]['x'])
+                coords_2 = (G.nodes[node2]['y'], G.nodes[node2]['x'])
+                print('{0:.15f}'.format(G.nodes[node1]['y']), G.nodes[node1]['x'])
                 
                 # Compute Haversine distance
-                distance_matrix[i][j] = haversine(lat1, lon1, lat2, lon2)
+                distance_matrix[i][j] = distance.geodesic(coords_1, coords_2).meters
     
     return distance_matrix
