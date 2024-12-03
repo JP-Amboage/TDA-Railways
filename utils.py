@@ -275,3 +275,10 @@ def compute_ideal_graph(G: nx.Graph, speed: Optional[float] = None) -> nx.Graph:
 
     G_prime = G_prime.to_undirected()
     return G_prime
+
+def column2name(column: str) -> str:
+    """
+    Convert a column name to a more readable format.
+    """
+    name = column.replace('_', ' ')
+    return name
