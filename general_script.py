@@ -29,6 +29,7 @@ def main(gtfs_path: str, out_path: str):
     print(f"Adding earth distance as edge attribute")
     add_earth_distnace(G)
     print(f'Edges attributes: {list(G.edges(data=True))[0]}')
+    print(f'Node attributes: {list(G.nodes(data=True))[0]}')
     
     print(f"Saving graph plot to {out_path}")
     graph_plot = pt.generate_plot(G)
@@ -42,7 +43,7 @@ def main(gtfs_path: str, out_path: str):
     print(f"Distance matrix has infinity? {has_infinity}")
     print(f"Distance matrix is symmetric? {np.array_equal(dist_mat, dist_mat.T)}")
     print(f"Comuting persistence on Floyd-Warshall distance matrix")
-    result = ripser(dist_mat, distance_matrix=True, maxdim=2)
+    result = ripser(dist_mat, distance_matrix=True, maxdim=1)
     
     print(f"Saving persistence diagrams to {out_path}")
     persistence_diagram = result['dgms']
@@ -111,6 +112,6 @@ def main(gtfs_path: str, out_path: str):
     print(f"Bottleneck distance H0: {H0_bottleneck_distance}")
 
 if __name__ == '__main__':
-    gtfs_path = 'Data/lucerne_filtered_coords.zip'
-    out_path = 'Data/output_lucerne'
+    gtfs_path = 'Data/zurich_filtered_coords.zip'
+    out_path = 'Data/outputs/zurich'
     main(gtfs_path, out_path)
