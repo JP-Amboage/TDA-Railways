@@ -78,28 +78,79 @@ class MyOwnDataset(InMemoryDataset):
         data, slices = self.collate(data_list)
         torch.save((data, slices), self.processed_paths[0])
 
+
+
+def _compute_var_statistics(data: list):
+    """
+    Compute statistics for a list of values.
+    """
+    if len(data) == 0:
+        return {
+            "mean": 0,
+            "std": 0,
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "p10": 0,
+            "p25": 0,
+            "p75": 0,
+            "p90": 0,
+            "iqr": 0
+        }
+    mean = np.mean(data)
+    std = np.std(data)
+    median = np.median(data)
+    minimum = np.min(data)
+    maximum = np.max(data)
+    p10 = np.percentile(data, 10)
+    p25 = np.percentile(data, 25)
+    p75 = np.percentile(data, 75)
+    p90 = np.percentile(data, 90)
+    iqr = p75 - p25
+
+    return {
+        "mean": mean,
+        "std": std,
+        "median": median,
+        "min": minimum,
+        "max": maximum,
+        "p10": p10,
+        "p25": p25,
+        "p75": p75,
+        "p90": p90,
+        "iqr": iqr
+    }
+
 # Function to compute persistence statistics
 def compute_persistence_statistics(diagrams):
     stats = {}
     for dim, diagram in enumerate(diagrams):
-        if len(diagram) > 0:
-            lifetimes = diagram[:, 1] - diagram[:, 0]  # Death - Birth
-            total_persistence = np.sum(lifetimes)
-            avg_persistence = np.mean(lifetimes) if len(lifetimes) > 0 else 0
-            max_persistence = np.max(lifetimes) if len(lifetimes) > 0 else 0
-            
-            stats[f"H{dim}"] = {
-                "num_features": len(lifetimes),
-                "total_persistence": total_persistence,
-                "average_persistence": avg_persistence,
-                "max_persistence": max_persistence,
-            }
-        else:
-            stats[f"H{dim}"] = {
-                "num_features": 0,
-                "total_persistence": 0,
-                "average_persistence": 0,
-                "max_persistence": 0,
+        birth_times = []
+        death_times = []
+        midpoints = []
+        lifespans = []
+        num_non_inf = 0
+        num_inf = 0
+        total_count = 0
+        for point in diagram:
+            if np.isinf(point[0]) or np.isinf(point[1]):
+                num_inf += 1
+                continue
+            birth_times.append(point[0])
+            death_times.append(point[1])
+            midpoints.append((point[0] + point[1]) / 2)
+            lifespans.append(point[1] - point[0])
+            num_non_inf += 1
+
+        total_count = num_non_inf + num_inf
+        stats[f"H{dim}"] = {
+                "count": total_count,
+                "num_non_inf": num_non_inf,
+                "num_inf": num_inf,
+                "births": _compute_var_statistics(birth_times),
+                "deaths": _compute_var_statistics(death_times),
+                "midpoints": _compute_var_statistics(midpoints),
+                "lifespans": _compute_var_statistics(lifespans)
             }
     return stats
 

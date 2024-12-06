@@ -112,6 +112,6 @@ def main(gtfs_path: str, out_path: str):
     print(f"Bottleneck distance H0: {H0_bottleneck_distance}")
 
 if __name__ == '__main__':
-    gtfs_path = 'Data/zurich_filtered_coords.zip'
-    out_path = 'Data/outputs/zurich'
+    gtfs_path = 'Data/filtered/geneva_coords.zip'
+    out_path = 'Data/outputs/test'
     main(gtfs_path, out_path)
