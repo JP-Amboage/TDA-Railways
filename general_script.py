@@ -110,6 +110,123 @@ def main(gtfs_path: str, out_path: str):
     print(f"Bottleneck distance H1: {H1_bottleneck_distance}")
     H0_bottleneck_distance = persim.bottleneck(persistence_diagram[0], ideal_mst_persistence_diagram[0])
     print(f"Bottleneck distance H0: {H0_bottleneck_distance}")
+    
+    print()
+    print(f"Moving into the time domain")
+    print(f"Computing floyd warshall time matrix on the original graph")
+    time_dist_mat = nx.floyd_warshall_numpy(G.to_undirected(), weight='length')
+    print(f"Comuting persistence on Floyd-Warshall time matrix")
+    result_time = ripser(time_dist_mat, distance_matrix=True, maxdim=1)
+
+    print(f"Saving persistence diagrams to {out_path}")
+    persistence_diagram_time = result_time['dgms']
+    f, ax = plt.subplots()
+    plot_diagrams(persistence_diagram_time, show=False)
+    f.savefig(out_path+'/persistence_diagram_time.png')
+
+    print(f'Computing persistence statistics')
+    stats_time = compute_persistence_statistics(persistence_diagram_time)
+    print(stats_time)
+
+    print(f"Comuting Ideal time matrix")
+    ideal_time_mat = ideal_dist_mat / speed
+
+    print(f"Comuting persistence on Ideal distance matrix")
+    ideal_result_time = ripser(ideal_time_mat , distance_matrix=True)
+    
+    print(f"Saving persistence diagrams to {out_path}")
+    ideal_persistence_diagram_time = ideal_result_time['dgms']
+    f, ax = plt.subplots()
+    plot_diagrams(ideal_persistence_diagram_time, show=False)
+    f.savefig(out_path+'/persistence_diagram_ideal_time.png')
+
+    print(f'Computing persistence statistics on the ideal time matrix')
+    ideal_stats_time = compute_persistence_statistics(ideal_persistence_diagram_time)
+    print(ideal_stats_time)
+
+    print(f"Computing bottleneck distance between the time persistence diagrams")
+    H1_bottleneck_distance_time = persim.bottleneck(persistence_diagram_time[1], ideal_persistence_diagram_time[1])
+    print(f"Bottleneck distance H1: {H1_bottleneck_distance_time}")
+    H0_bottleneck_distance_time = persim.bottleneck(persistence_diagram_time[0], ideal_persistence_diagram_time[0])
+    print(f"Bottleneck distance H0: {H0_bottleneck_distance_time}")
+
+    ##############################
+    # MOVING INTO THE NORMALIZED Distance DOMAIN
+    print()
+    print(f"Moving into the normalized distance domain")
+    normalizer = np.max(ideal_dist_mat)
+    print(f"Normalizer: {normalizer}")
+    dist_mat_normalized = dist_mat / normalizer
+    ideal_dist_mat_normalized = ideal_dist_mat / normalizer
+
+    print(f"Comuting persistence on NORMALIZED distance matrix")
+    result_normalized = ripser(dist_mat_normalized, distance_matrix=True, maxdim=1)
+    print(f"Saving persistence diagrams to {out_path}")
+    persistence_diagram_normalized = result_normalized['dgms']
+    f, ax = plt.subplots()
+    plot_diagrams(persistence_diagram_normalized, show=False)
+    f.savefig(out_path+'/persistence_diagram_normalized.png')
+
+    print(f'Computing persistence statistics')
+    stats_normalized = compute_persistence_statistics(persistence_diagram_normalized)
+    print(stats_normalized)
+
+    print(f"Comuting persistence on Ideal NORMALIZED distance matrix")
+    ideal_result_normalized = ripser(ideal_dist_mat_normalized , distance_matrix=True)
+    print(f"Saving persistence diagrams to {out_path}")
+    ideal_persistence_diagram_normalized = ideal_result_normalized['dgms']
+    f, ax = plt.subplots()
+    plot_diagrams(ideal_persistence_diagram_normalized, show=False)
+    f.savefig(out_path+'/persistence_diagram_ideal_normalized.png')
+
+    print(f'Computing persistence statistics')
+    ideal_stats_normalized = compute_persistence_statistics(ideal_persistence_diagram_normalized)
+    print(ideal_stats_normalized)
+
+    print(f"Computing bottleneck distance between the normalized persistence diagrams")
+    H1_bottleneck_distance_normalized = persim.bottleneck(persistence_diagram_normalized[1], ideal_persistence_diagram_normalized[1])
+    print(f"Bottleneck distance H1: {H1_bottleneck_distance_normalized}")
+    H0_bottleneck_distance_normalized = persim.bottleneck(persistence_diagram_normalized[0], ideal_persistence_diagram_normalized[0])
+    print(f"Bottleneck distance H0: {H0_bottleneck_distance_normalized}")
+
+    ####
+    # Moving into the normalized time domain
+    print()
+    print(f"Moving into the normalized time domain")
+    normalizer_time = np.max(ideal_time_mat)
+    print(f"Normalizer Time: {normalizer_time}")
+    time_mat_normalized = time_dist_mat / normalizer_time
+    ideal_time_mat_normalized = ideal_time_mat / normalizer_time
+
+    print(f"Comuting persistence on NORMALIZED distance matrix")
+    result_normalized_time = ripser(time_mat_normalized, distance_matrix=True, maxdim=1)
+    print(f"Saving persistence diagrams to {out_path}")
+    persistence_diagram_normalized_time = result_normalized_time['dgms']
+    f, ax = plt.subplots()
+    plot_diagrams(persistence_diagram_normalized_time, show=False)
+    f.savefig(out_path+'/persistence_diagram_normalized_time.png')
+
+    print(f'Computing persistence statistics')
+    stats_normalized_time = compute_persistence_statistics(persistence_diagram_normalized_time)
+    print(stats_normalized_time)
+
+    print(f"Comuting persistence on Ideal NORMALIZED time matrix")
+    ideal_result_normalized_time = ripser(ideal_time_mat_normalized , distance_matrix=True)
+    print(f"Saving persistence diagrams to {out_path}")
+    ideal_persistence_diagram_normalized_time = ideal_result_normalized_time['dgms']
+    f, ax = plt.subplots()
+    plot_diagrams(ideal_persistence_diagram_normalized_time, show=False)
+    f.savefig(out_path+'/persistence_diagram_ideal_normalized_time.png')
+
+    print(f'Computing persistence statistics')
+    ideal_stats_normalized_time = compute_persistence_statistics(ideal_persistence_diagram_normalized_time)
+    print(ideal_stats_normalized_time)
+
+    print(f"Computing bottleneck distance between the normalized persistence diagrams")
+    H1_bottleneck_distance_normalized_time = persim.bottleneck(persistence_diagram_normalized_time[1], ideal_persistence_diagram_normalized_time[1])
+    print(f"Bottleneck distance H1: {H1_bottleneck_distance_normalized_time}")
+    H0_bottleneck_distance_normalized_time = persim.bottleneck(persistence_diagram_normalized_time[0], ideal_persistence_diagram_normalized_time[0])
+    print(f"Bottleneck distance H0: {H0_bottleneck_distance_normalized_time}")
 
 if __name__ == '__main__':
     gtfs_path = 'Data/filtered/geneva_coords.zip'
