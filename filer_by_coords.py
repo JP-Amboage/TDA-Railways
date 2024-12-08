@@ -29,6 +29,13 @@ wandenswil_coords = {'min_lat': 47.15913, 'max_lat': 47.251714, 'min_lon': 8.615
 grenchen_coords = {'min_lat': 47.162365, 'max_lat': 47.240274, 'min_lon': 7.340772, 'max_lon': 7.431409}
 zug_coords = {'min_lat': 47.114322, 'max_lat': 47.18979, 'min_lon': 8.475288, 'max_lon': 8.558208}
 
+duendorf_coords = {'min_lat': 47.36677, 'max_lat': 47.40919, 'min_lon': 8.583292, 'max_lon': 8.652471}
+rapperswil_jona_coords = {'min_lat': 47.214674, 'max_lat': 47.250691, 'min_lon': 8.795778, 'max_lon': 8.918}
+koniz_coords = {'min_lat': 46.91, 'max_lat': 46.96, 'min_lon': 7.36, 'max_lon': 7.46}
+lancy_coords = {'min_lat': 46.167312, 'max_lat': 46.202788, 'min_lon': 6.10305, 'max_lon': 6.140129}
+uster_coords = {'min_lat': 47.320264, 'max_lat': 47.383763, 'min_lon': 8.689773, 'max_lon': 8.760313}
+vernier_coords = {'min_lat': 46.192085, 'max_lat': 46.224932, 'min_lon': 6.068797, 'max_lon': 6.118665}
+chur_coords = {'min_lat': 46.818227, 'max_lat': 46.904382, 'min_lon': 9.454128, 'max_lon': 9.594879}
 la_chaux_de_fonds_coords = {'min_lat': 47.066, 'max_lat': 47.119, 'min_lon': 6.769, 'max_lon': 6.866}
 
 
