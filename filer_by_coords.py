@@ -16,6 +16,19 @@ lugano_coords = {'min_lat': 45.950, 'max_lat': 46.050, 'min_lon': 8.900, 'max_lo
 biel_coords = {'min_lat': 47.110, 'max_lat': 47.180, 'min_lon': 7.180, 'max_lon': 7.320}
 thun_coords = {'min_lat': 46.700, 'max_lat': 46.790, 'min_lon': 7.560, 'max_lon': 7.690}
 
+fribourg_coords = {'min_lat': 46.784883, 'max_lat': 46.821603, 'min_lon': 7.136037, 'max_lon': 7.184445}
+winterthur_coords = {'min_lat': 47.44979, 'max_lat': 47.548369, 'min_lon': 8.656353, 'max_lon': 8.810333}
+neuchatel_coords = {'min_lat': 46.977977, 'max_lat': 47.030656, 'min_lon': 6.845157, 'max_lon': 6.969611}
+schauffhausen_coords = {'min_lat': 47.685409, 'max_lat': 47.752821, 'min_lon': 8.540467, 'max_lon': 8.703519}
+sion_coords = {'min_lat': 46.17877, 'max_lat': 46.256007, 'min_lon': 7.305354, 'max_lon': 7.42499}
+montreux_coords = {'min_lat': 46.42124, 'max_lat': 46.486167, 'min_lon': 6.877999, 'max_lon': 6.991982}
+baar_coords = {'min_lat': 47.150982, 'max_lat': 47.222963, 'min_lon': 8.496212, 'max_lon': 8.57758}
+yberdon_les_bains_coords = {'min_lat': 46.738787, 'max_lat': 46.795344, 'min_lon': 6.604544, 'max_lon': 6.671664}
+caurouge_coords = {'min_lat': 46.168491, 'max_lat': 46.190733, 'min_lon': 6.127551, 'max_lon': 6.154525}
+wandenswil_coords = {'min_lat': 47.15913, 'max_lat': 47.251714, 'min_lon': 8.615209, 'max_lon': 8.692185}
+grenchen_coords = {'min_lat': 47.162365, 'max_lat': 47.240274, 'min_lon': 7.340772, 'max_lon': 7.431409}
+zug_coords = {'min_lat': 47.114322, 'max_lat': 47.18979, 'min_lon': 8.475288, 'max_lon': 8.558208}
+
 #%%
 if not os.path.exists('gtfs_temp'):
     os.makedirs('gtfs_temp')
@@ -26,7 +39,7 @@ else:
     sys.exit()
 #%%
 in_path = 'Data/gtfs_fp2024_2024-10-24'
-out_path = 'Data/lausanne_filtered_coords.zip'
+out_path = 'Data/lausanne_coords.zip'
 coords = lausanne_coords
 #%%
 stops = pd.read_csv(in_path + "/stops.txt")
