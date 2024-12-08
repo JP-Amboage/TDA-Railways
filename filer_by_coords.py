@@ -29,6 +29,15 @@ wandenswil_coords = {'min_lat': 47.15913, 'max_lat': 47.251714, 'min_lon': 8.615
 grenchen_coords = {'min_lat': 47.162365, 'max_lat': 47.240274, 'min_lon': 7.340772, 'max_lon': 7.431409}
 zug_coords = {'min_lat': 47.114322, 'max_lat': 47.18979, 'min_lon': 8.475288, 'max_lon': 8.558208}
 
+koeniz_coords = {'min_lat': 46.910, 'max_lat': 46.960, 'min_lon': 7.360, 'max_lon': 7.460}
+la_chaux_de_fonds_coords = {'min_lat': 47.080, 'max_lat': 47.120, 'min_lon': 6.780, 'max_lon': 6.850}
+chur_coords = {'min_lat': 46.830, 'max_lat': 46.860, 'min_lon': 9.500, 'max_lon': 9.570}
+vernier_coords = {'min_lat': 46.200, 'max_lat': 46.230, 'min_lon': 6.070, 'max_lon': 6.120}
+uster_coords = {'min_lat': 47.340, 'max_lat': 47.370, 'min_lon': 8.690, 'max_lon': 8.740}
+lancy_coords = {'min_lat': 46.170, 'max_lat': 46.200, 'min_lon': 6.110, 'max_lon': 6.140}
+duebendorf_coords = {'min_lat': 47.390, 'max_lat': 47.420, 'min_lon': 8.590, 'max_lon': 8.640}
+rapperswil_jona_coords = {'min_lat': 47.220, 'max_lat': 47.250, 'min_lon': 8.810, 'max_lon': 8.870}
+
 #%%
 if not os.path.exists('gtfs_temp'):
     os.makedirs('gtfs_temp')
