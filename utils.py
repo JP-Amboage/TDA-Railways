@@ -155,12 +155,21 @@ def compute_persistence_statistics(diagrams):
     return stats
 
 
-def print_stats(stats):
-    for hom_dim, stat in stats.items():
-        print(f"{hom_dim} Persistence Statistics:")
-        for key, value in stat.items():
-            print(f"  {key}: {value}")
-        print()
+def stats2features(stats, id):
+    '''
+    Convert persistence statistics to features
+    '''
+    features = []
+    for dim in stats:
+        for key in ['count', 'num_non_inf', 'num_inf']:
+            feature = [f'{id}_{dim}_{key}', stats[dim][key]]
+            features.append(feature)
+
+        for key in ['births', 'deaths', 'midpoints', 'lifespans']:
+            for stat in stats[dim][key]:
+                feature = [f'{id}_{dim}_{key}_{stat}', stats[dim][key][stat]]
+                features.append(feature)
+    return features
 
 def compute_ideal_matrix(G: nx.Graph):
     """
@@ -212,11 +221,18 @@ def add_earth_distnace(G: nx.Graph):
     Add an 'earth_distance' attribute to each edge in the graph G.
     """
     set_edge_attributes(G, None, 'earth_distance')
+    if type(G) == nx.MultiGraph:
+        for u, v, key in G.edges(keys=True):
+            coords_u = (G.nodes[u]['y'], G.nodes[u]['x'])
+            coords_v = (G.nodes[v]['y'], G.nodes[v]['x'])
+            G[u][v][key]['earth_distance'] = distance.geodesic(coords_u, coords_v).meters
+    else: 
+        for u, v in list(G.edges()):
+            coords_u = (G.nodes[u]['y'], G.nodes[u]['x'])
+            coords_v = (G.nodes[v]['y'], G.nodes[v]['x'])
+            G[u][v]['earth_distance'] = distance.geodesic(coords_u, coords_v).meters
 
-    for u, v, key in G.edges(keys=True):
-        coords_u = (G.nodes[u]['y'], G.nodes[u]['x'])
-        coords_v = (G.nodes[v]['y'], G.nodes[v]['x'])
-        G[u][v][key]['earth_distance'] = distance.geodesic(coords_u, coords_v).meters
+    
 
 def compute_speed(G: nx.Graph, mode: str = 'max')->float:
     """
@@ -232,15 +248,21 @@ def compute_speed(G: nx.Graph, mode: str = 'max')->float:
     speeds = []
     mode_function = _speed_mode2function(mode)
 
-    for u, v, key in G.edges(keys=True):
-        if u != v:
-            # if G[u][v][key]['length'] == 0:
-            #     print(G[u][v][key])
-            #     print(G.nodes[u])
-            #     print(G.nodes[v])
-            if G[u][v][key]['length'] != 0:
-                # Length 0 seems to be related to walking edges so they are not considered
-                speeds.append(G[u][v][key]['earth_distance'] / G[u][v][key]['length'])
+    if type(G) == nx.MultiGraph:
+        for u, v, key in G.edges(keys=True):
+            if u != v:
+                # if G[u][v][key]['length'] == 0:
+                #     print(G[u][v][key])
+                #     print(G.nodes[u])
+                #     print(G.nodes[v])
+                if G[u][v][key]['length'] != 0:
+                    # Length 0 seems to be related to walking edges so they are not considered
+                    speeds.append(G[u][v][key]['earth_distance'] / G[u][v][key]['length'])
+    else:
+        for u, v in list(G.edges()):
+            if u != v:
+                if G[u][v]['length'] != 0:
+                    speeds.append(G[u][v]['earth_distance'] / G[u][v]['length'])    
     
     return mode_function(speeds)
 
@@ -279,7 +301,7 @@ def compute_undirected_graph_no_multi(G: nx.Graph, mode: str = 'min') -> nx.Grap
 
     # add edges
     for u, v in G.edges(keys=False):
-        edges = G[u,v].values()
+        edges = G[u][v].values()
         
         if mode == 'max':
             chosen_edge = max(edges, key=lambda x: x['length'])
@@ -289,8 +311,8 @@ def compute_undirected_graph_no_multi(G: nx.Graph, mode: str = 'min') -> nx.Grap
             mean_value = sum(edge['length'] for edge in edges) / len(edges)
             chosen_edge = {'length': mean_value}
             if 'earth_distance' in G[u][v][0]:
-                mean_value = sum(edge['earth_distance'] for edge in edges) / len(edges)
-                chosen_edge['earth_distance'] = mean_value
+                # If 'earth_distance' attribute is present all edges should have the same value
+                chosen_edge['earth_distance'] = G[u][v][0]['earth_distance']
         else:
             raise ValueError("Invalid mode. Choose from 'max', 'min', or 'mean'.")
 
@@ -333,3 +355,11 @@ def column2name(column: str) -> str:
     """
     name = column.replace('_', ' ')
     return name
+
+def features2str(features: list) -> str:
+    """
+    Convert a list of features to a string.
+    """
+    header = ','.join([feature[0] for feature in features])
+    values = ','.join([str(feature[1]) for feature in features])
+    return header + '\n' + values
