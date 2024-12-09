@@ -106,8 +106,6 @@ city_coords = {
 
 #####
 def filter_fun(city: str, in_path: str, out_path: str):
-    in_path = 'Data/gtfs_fp2024_2024-10-24'
-    out_path = 'Data/lausanne_coords.zip'
     coords = city_coords[city]
     #####
     if not os.path.exists('gtfs_temp'):

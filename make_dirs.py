@@ -44,7 +44,8 @@ if __name__ == '__main__':
     
     filtered_dir = './Data/filtered/'
     in_path = 'Data/gtfs_fp2024_2024-10-28'
-
+    os.makedirs(filtered_dir, exist_ok=True)
+    
     print(f'Creating filtered GTFS for {len(cities)} cities inside {filtered_dir}')
     for city in cities:
         out_path = f'{filtered_dir}{city}_coords.zip'
