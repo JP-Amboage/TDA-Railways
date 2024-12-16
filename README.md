@@ -1,3 +1,4 @@
 # TDA-Railways
-* :warning: **CURRENTLY MOST OF THE CODE IS TAKEN FROM [AIDOS-LAB GTFS REPO](https://github.com/aidos-lab/gtfstop/)**. The readme of that repo is copied in the file README_other_repo.md.
-* :warning: **LOOK AT THE FILE INSIDE Data FODLER FOR INSTRUCTIONS ON HOW TO DOWNLOAD THE DATA.**
+## Code repo for the paper *From Timetables to Topology: A TDA Journey Trough the Swiss Public Transport Network*
+
+* :warning: **Even though this repo is already public re-organization of filestructure and addition of better instructions to this README are still in progress. Stay Tuned**.
